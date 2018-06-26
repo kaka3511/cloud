@@ -50,6 +50,38 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.baidu.disconf/disconf-core -->
+    <dependency>
+      <groupId>com.baidu.disconf</groupId>
+      <artifactId>disconf-client</artifactId>
+      <version>2.6.36</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>${druid.version}</version>
+    </dependency>
+
+    <!-- mybatis -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.11</version>
+    </dependency>
+
+
+
+
+
+
 
 
 
