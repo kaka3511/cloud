@@ -1,5 +1,6 @@
 package com.kaka.cloud.api;
 
+import com.kaka.cloud.common.KakaResultDto;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 

@@ -2,6 +2,7 @@ package com.kaka.cloud.controller;
 
 import com.kaka.cloud.api.NewsApi;
 import com.kaka.cloud.api.WeatherApi;
+import com.kaka.cloud.common.KakaResultDto;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +31,24 @@ public class NewsController {
 
   @RequestMapping(value = "/queryNews", method = RequestMethod.GET)
   @ResponseBody
-  public ServiceResultDto queryNews(@RequestParam(value = "title", required = false) String title,
-                                    @RequestParam(value = "page", required = false) Integer page,
-                                    @RequestParam(value = "size", required = false) Integer size) {
+  public KakaResultDto queryNews(@RequestParam(value = "page", required = false) Integer page,
+                                 @RequestParam(value = "limit", required = false) Integer limit) {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
-    serviceRequestDto.set("title", title);
     serviceRequestDto.set("page", page);
-    serviceRequestDto.set("size", size);
-    return newsApi.queryNews(serviceRequestDto);
+    serviceRequestDto.set("size", limit);
+    ServiceResultDto serviceResultDto =  newsApi.queryNews(serviceRequestDto);
+
+    KakaResultDto kakaResultDto = KakaResultDto.success();
+    return kakaResultDto;
   }
 
   @RequestMapping(value = "/updateNews", method = RequestMethod.POST)
   @ResponseBody
-  public ServiceResultDto updateNews() {
+  public KakaResultDto updateNews() {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
-    return newsApi.updateNews(serviceRequestDto);
+    ServiceResultDto serviceResultDto = newsApi.updateNews(serviceRequestDto);
+
+    KakaResultDto kakaResultDto = KakaResultDto.success();
+    return kakaResultDto;
   }
 }
