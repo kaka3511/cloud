@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.cloud.mapper.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.kaka.cloud.entity.News">
+    <id column="id" property="id" jdbcType="TINYINT"/>
+    <result column="title" property="title" jdbcType="VARCHAR"/>
+    <result column="url" property="url" jdbcType="VARCHAR"/>
+    <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,title,url,updateTime
+  </sql>
+
+  <sql id="search_news_list_fragment">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="title != null and title != ''">
+        and title = #{title}
+      </if>
+    </trim>
+  </sql>
+
+  <select id="queryNews" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List"/>
+    from news
+    <include refid="search_news_list_fragment"></include>
+    order by updateTime DESC
+  </select>
+
+  <insert id="insertNews" parameterType="com.kaka.cloud.entity.News">
+    INSERT INTO news(title,url,updateTime)
+    VALUES(#{title},#{url},sysdate())
+  </insert>
+
+</mapper>
