@@ -1,4 +1,4 @@
-package com.kaka.cloud;
+package com.kaka.cloud.util;
 
 import com.kaka.cloud.util.CognateErrorCodeConfigReader;
 import com.kaka.cloud.util.ExceptionFormatter;
