@@ -14,15 +14,15 @@ public class KakaResultDto implements Serializable {
 
   private static final long serialVersionUID = -6144000382695493111L;
 
-  private String code;
+  private Integer code;
   private String msg;
-  private String count;
+  private Integer count;
   private List<?> data = new ArrayList();
 
   public KakaResultDto() {
   }
 
-  public KakaResultDto(String code, String msg, String count, List<?> data) {
+  public KakaResultDto(Integer code, String msg, Integer count, List<?> data) {
     this.code = code;
     this.msg = msg;
     this.count = count;
@@ -31,15 +31,15 @@ public class KakaResultDto implements Serializable {
 
   public static KakaResultDto success() {
     KakaResultDto kakaResultDto = new KakaResultDto();
-    kakaResultDto.setCode("200");
+    kakaResultDto.setCode(0);
     return kakaResultDto;
   }
 
-  public String getCode() {
+  public Integer getCode() {
     return code;
   }
 
-  public void setCode(String code) {
+  public void setCode(Integer code) {
     this.code = code;
   }
 
@@ -51,11 +51,11 @@ public class KakaResultDto implements Serializable {
     this.msg = msg;
   }
 
-  public String getCount() {
+  public Integer getCount() {
     return count;
   }
 
-  public void setCount(String count) {
+  public void setCount(Integer count) {
     this.count = count;
   }
 

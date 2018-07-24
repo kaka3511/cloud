@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author fuwei
  * @version V1.0
@@ -39,6 +41,10 @@ public class NewsController {
     ServiceResultDto serviceResultDto =  newsApi.queryNews(serviceRequestDto);
 
     KakaResultDto kakaResultDto = KakaResultDto.success();
+    kakaResultDto.setCode(0);
+    kakaResultDto.setMsg("");
+    kakaResultDto.setCount(serviceResultDto.get("total", Integer.class));
+    kakaResultDto.setData(serviceResultDto.get("data", List.class));
     return kakaResultDto;
   }
 
@@ -46,9 +52,6 @@ public class NewsController {
   @ResponseBody
   public KakaResultDto updateNews() {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
-    ServiceResultDto serviceResultDto = newsApi.updateNews(serviceRequestDto);
-
-    KakaResultDto kakaResultDto = KakaResultDto.success();
-    return kakaResultDto;
+    return newsApi.updateNews(serviceRequestDto);
   }
 }

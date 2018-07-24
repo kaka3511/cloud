@@ -2,6 +2,7 @@ package com.kaka.cloud.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kaka.cloud.api.NewsApi;
+import com.kaka.cloud.common.KakaResultDto;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.News;
@@ -34,14 +35,16 @@ public class NewsApiImpl implements NewsApi {
    * @return
    */
   @Override
-  public ServiceResultDto updateNews(ServiceRequestDto reqDto) {
+  public KakaResultDto updateNews(ServiceRequestDto reqDto) {
+    KakaResultDto kakaResultDto = KakaResultDto.success();
     String baseUrl = "http://news.163.com/world/";
 
     Document doc= null;
     try {
       doc = Jsoup.connect(baseUrl).get();
     } catch (IOException e) {
-      return ServiceResultDto.error("500", "系统内部错误！");
+      kakaResultDto.setMsg("系统内部错误");
+      return kakaResultDto;
     }
 
     Elements elements = doc.select(".ns_area .today_news ul li a");
@@ -50,16 +53,15 @@ public class NewsApiImpl implements NewsApi {
       String title = element.attr("title");
       List<News> list = newsMapper.queryNews(title);
       if (list.size() > 0) {
-        return ServiceResultDto.error("1003", "当前已是最新数据！");
+        kakaResultDto.setMsg("当前已是最新数据");
+        return kakaResultDto;
       }
       String url = element.attr("href");
       News insertObj = new News(title,url);
       newsMapper.insertNews(insertObj);
     }
-    ServiceResultDto resultDto = ServiceResultDto.success();
-    resultDto.set("data", "");
-    resultDto.set("msg", "更新完成！");
-    return resultDto;
+    kakaResultDto.setMsg("更新完成");
+    return kakaResultDto;
   }
 
   @Override
@@ -81,13 +83,11 @@ public class NewsApiImpl implements NewsApi {
 
     int totalNum = countList.size();
 
-    Map<String, Object> resultMap = new HashMap(16);
-    resultMap.put("data", dataList);
-    resultMap.put("page", page);
-    resultMap.put("size", size);
-    resultMap.put("pages", (totalNum + size - 1) / size);
-    resultMap.put("total", totalNum);
-    serviceResultDto.setResponseBody(resultMap);
+    serviceResultDto.set("data", dataList);
+    serviceResultDto.set("page", page);
+    serviceResultDto.set("size", size);
+    serviceResultDto.set("pages", (totalNum + size - 1) / size);
+    serviceResultDto.set("total", totalNum);
     return serviceResultDto;
   }
 }
