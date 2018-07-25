@@ -27,7 +27,7 @@
     <include refid="Base_Column_List"/>
     from news
     <include refid="search_news_list_fragment"></include>
-    order by updateTime DESC
+    order by updateTime DESC, id DESC
   </select>
 
   <insert id="insertNews" parameterType="com.kaka.cloud.entity.News">
