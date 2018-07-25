@@ -81,9 +81,14 @@ public class NewsApiImpl implements NewsApi {
       size = Integer.parseInt(map.get("size").toString().trim());
     }
 
-    List<News> countList = newsMapper.queryNews(null, null);
+    String title = "";
+    if ((null != map.get("title") && !"".equals(map.get("title").toString().trim()))) {
+      title = map.get("title").toString().trim();
+    }
+
+    List<News> countList = newsMapper.queryNews(title, null);
     PageHelper.startPage(page, size);
-    List<News> dataList = newsMapper.queryNews(null, null);
+    List<News> dataList = newsMapper.queryNews(title, null);
 
     int totalNum = countList.size();
 

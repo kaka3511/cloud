@@ -14,7 +14,7 @@
   <sql id="search_news_list_fragment">
     <trim prefix="WHERE" prefixOverrides="AND | OR">
       <if test="title != null and title != ''">
-        and title = #{title}
+        and title like '%${title}%'
       </if>
       <if test="url != null and url != ''">
         and url = #{url}

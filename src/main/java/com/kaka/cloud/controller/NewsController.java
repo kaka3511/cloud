@@ -34,10 +34,12 @@ public class NewsController {
   @RequestMapping(value = "/queryNews", method = RequestMethod.GET)
   @ResponseBody
   public KakaResultDto queryNews(@RequestParam(value = "page", required = false) Integer page,
-                                 @RequestParam(value = "limit", required = false) Integer limit) {
+                                 @RequestParam(value = "limit", required = false) Integer limit,
+                                 @RequestParam(value = "keyword", required = false) String keyword) {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
     serviceRequestDto.set("page", page);
     serviceRequestDto.set("size", limit);
+    serviceRequestDto.set("title", keyword);
     ServiceResultDto serviceResultDto =  newsApi.queryNews(serviceRequestDto);
 
     KakaResultDto kakaResultDto = KakaResultDto.success();
