@@ -16,6 +16,9 @@
       <if test="title != null and title != ''">
         and title = #{title}
       </if>
+      <if test="url != null and url != ''">
+        and url = #{url}
+      </if>
     </trim>
   </sql>
 

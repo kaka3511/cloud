@@ -14,5 +14,5 @@ public interface NewsMapper {
 
   void insertNews(News news);
 
-  List<News> queryNews(@Param(value="title") String title);
+  List<News> queryNews(@Param(value="title") String title, @Param(value="url") String url);
 }

@@ -7,6 +7,7 @@ import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.News;
 import com.kaka.cloud.mapper.NewsMapper;
+import com.kaka.cloud.util.LogUtils;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -49,18 +50,21 @@ public class NewsApiImpl implements NewsApi {
 
     Elements elements = doc.select(".ns_area .today_news ul li a");
 
+    int updateCount = 0;
     for (Element element:elements) {
       String title = element.attr("title");
-      List<News> list = newsMapper.queryNews(title);
-      if (list.size() > 0) {
-        kakaResultDto.setMsg("当前已是最新数据");
-        return kakaResultDto;
-      }
       String url = element.attr("href");
+      List<News> list = newsMapper.queryNews(null, url);
+      if (list.size() == 0) {
+        updateCount ++;
+      }else {
+        continue;
+      }
       News insertObj = new News(title,url);
       newsMapper.insertNews(insertObj);
     }
-    kakaResultDto.setMsg("更新完成");
+    kakaResultDto.setMsg("更新" + updateCount + "数据");
+    LogUtils.logOther("更新" + updateCount + "数据");
     return kakaResultDto;
   }
 
@@ -77,9 +81,9 @@ public class NewsApiImpl implements NewsApi {
       size = Integer.parseInt(map.get("size").toString().trim());
     }
 
-    List<News> countList = newsMapper.queryNews("");
+    List<News> countList = newsMapper.queryNews(null, null);
     PageHelper.startPage(page, size);
-    List<News> dataList = newsMapper.queryNews("");
+    List<News> dataList = newsMapper.queryNews(null, null);
 
     int totalNum = countList.size();
 
