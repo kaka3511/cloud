@@ -16,7 +16,7 @@
       druid          druid监控、线程池日志
       other           其他日志
  -->
-<configuration scan="true" scanPeriod="10 seconds" debug="false">
+<configuration scan="true" scanPeriod="10 seconds" debug="true">
     <substitutionProperty name="log.base" value="${catalina.base}/logs/cloud" />
     <substitutionProperty name="log.app" value="${log.base}/app" />
     <substitutionProperty name="log.access" value="${log.base}/access" />

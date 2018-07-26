@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class Db {
   private String username = "localhost";
   private String password = "Kaka3511!";
-//  private String url = "jdbc:oracle:thin:@172.30.0.242:1520:oradb01";
   private String url = "jdbc:mysql://139.199.59.97:3306/cloud";
 
   public String getUsername() {
