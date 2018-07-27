@@ -35,4 +35,21 @@
     VALUES(#{title},#{url},sysdate())
   </insert>
 
+  <delete id="delNews" parameterType="string">
+          DELETE FROM news WHERE id = #{id}
+  </delete>
+
+  <update id="modifyNews" parameterType="com.kaka.cloud.entity.News">
+    UPDATE news
+    <set>
+      <if test="title != null and title != ''">
+        title = #{title},
+      </if>
+      <if test="url != null and url != ''">
+        url = #{url},
+      </if>
+    </set>,updateTime = sysdate()
+    WHERE id = #{id}
+  </update>
+
 </mapper>

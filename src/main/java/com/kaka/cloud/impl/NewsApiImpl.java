@@ -99,4 +99,31 @@ public class NewsApiImpl implements NewsApi {
     serviceResultDto.set("total", totalNum);
     return serviceResultDto;
   }
+
+  @Override
+  public ServiceResultDto delNews(ServiceRequestDto reqDto) {
+    ServiceResultDto serviceResultDto = ServiceResultDto.success();
+    Map map = reqDto.getValues();
+    String id = map.get("id").toString();
+    newsMapper.delNews(id);
+    return serviceResultDto;
+  }
+
+  @Override
+  public ServiceResultDto modifyNews(ServiceRequestDto reqDto) {
+    ServiceResultDto serviceResultDto = ServiceResultDto.success();
+    Map map = reqDto.getValues();
+    Integer id = Integer.parseInt(map.get("id").toString());
+    String title = "";
+    String url = "";
+    if (null != map.get("title") && !"".equals(map.get("title").toString().trim())) {
+      title = map.get("title").toString().trim();
+    }
+    if (null != map.get("url") && !"".equals(map.get("url").toString().trim())) {
+      url = map.get("url").toString().trim();
+    }
+    News news = new News(id,title,url);
+    newsMapper.modifyNews(news);
+    return serviceResultDto;
+  }
 }

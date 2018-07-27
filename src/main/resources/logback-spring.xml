@@ -16,7 +16,7 @@
       druid          druid监控、线程池日志
       other           其他日志
  -->
-<configuration scan="true" scanPeriod="10 seconds" debug="true">
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
     <substitutionProperty name="log.base" value="${catalina.base}/logs/cloud" />
     <substitutionProperty name="log.app" value="${log.base}/app" />
     <substitutionProperty name="log.access" value="${log.base}/access" />
@@ -203,8 +203,8 @@
         <appender-ref ref="druid" />
     </logger>
 
-    <root level="INFO">
-        <appender-ref ref="app" />
+    <root level="debug">
+        <appender-ref ref="stdout" />
     </root>
 
 </configuration>

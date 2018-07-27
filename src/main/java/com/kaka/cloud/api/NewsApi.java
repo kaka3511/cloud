@@ -24,4 +24,20 @@ public interface NewsApi {
    * @return
    */
   ServiceResultDto queryNews(ServiceRequestDto reqDto);
+
+
+  /**
+   * 删除新闻
+   * @param reqDto
+   * @return
+   */
+  ServiceResultDto delNews(ServiceRequestDto reqDto);
+
+  /**
+   * 修改新闻
+   * @param reqDto
+   * @return
+   */
+  ServiceResultDto modifyNews(ServiceRequestDto reqDto);
+
 }

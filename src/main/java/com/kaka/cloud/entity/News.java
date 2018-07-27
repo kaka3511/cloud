@@ -20,6 +20,12 @@ public class News {
     this.url = url;
   }
 
+  public News(int id, String title, String url) {
+    this.id = id;
+    this.title = title;
+    this.url = url;
+  }
+
   public News(int id, String title, String url, String updateTime) {
     this.id = id;
     this.title = title;

@@ -5,10 +5,12 @@ import com.kaka.cloud.api.WeatherApi;
 import com.kaka.cloud.common.KakaResultDto;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,5 +57,21 @@ public class NewsController {
   public KakaResultDto updateNews() {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
     return newsApi.updateNews(serviceRequestDto);
+  }
+
+  @RequestMapping(value = "/delNews", method = RequestMethod.POST)
+  @ResponseBody
+  public ServiceResultDto delNews(@RequestBody Map map) {
+    ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
+    serviceRequestDto.put(map);
+    return newsApi.delNews(serviceRequestDto);
+  }
+
+  @RequestMapping(value = "/modifyNews", method = RequestMethod.POST)
+  @ResponseBody
+  public ServiceResultDto modifyNews(@RequestBody Map map) {
+    ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
+    serviceRequestDto.put(map);
+    return newsApi.modifyNews(serviceRequestDto);
   }
 }
