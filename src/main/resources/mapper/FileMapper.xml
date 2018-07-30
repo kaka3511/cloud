@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.cloud.mapper.FileMapper">
+  <resultMap id="BaseResultMap" type="com.kaka.cloud.entity.FileInfo">
+    <id column="id" property="id" jdbcType="TINYINT"/>
+    <result column="fileName" property="fileName" jdbcType="VARCHAR"/>
+    <result column="fileType" property="fileType" jdbcType="VARCHAR"/>
+    <result column="url" property="url" jdbcType="VARCHAR"/>
+    <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fileName, fileType, url, updateTime
+  </sql>
+
+
+  <select id="queryFile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from file
+    order by updateTime DESC, id DESC
+  </select>
+
+  <insert id="uploadFile" parameterType="com.kaka.cloud.entity.FileInfo">
+    INSERT INTO file(fileName, fileType, url, updateTime)
+    VALUES(#{fileName}, #{fileType}, #{url}, sysdate())
+  </insert>
+
+</mapper>
