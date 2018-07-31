@@ -9,6 +9,7 @@ import com.kaka.cloud.entity.News;
 import com.kaka.cloud.mapper.NewsMapper;
 import com.kaka.cloud.util.LogUtils;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,56 @@ public class NewsApiImpl implements NewsApi {
     }
     News news = new News(id,title,url);
     newsMapper.modifyNews(news);
+    return serviceResultDto;
+  }
+
+  @Override
+  public ServiceResultDto get4EchartNews(ServiceRequestDto reqDto) {
+    List<News> dataList = newsMapper.queryNews(null, null);
+    List<String> dataTitle = new ArrayList<>();
+
+    dataTitle.add("00:00:00-03:59:59");
+    dataTitle.add("04:00:00-07:59:59");
+    dataTitle.add("08:00:00-11:59:59");
+    dataTitle.add("12:00:00-15:59:59");
+    dataTitle.add("16:00:00-19:59:59");
+    dataTitle.add("20:00:00-23:59:59");
+
+    List<Integer> dataValue = new ArrayList<>();
+    int _0_section = 0, _1_section = 0, _2_section = 0, _3_section = 0, _4_section = 0, _5_section = 0;
+
+    for(News news: dataList) {
+      String updateTimeSub = news.getUpdateTime().substring(11);
+      if (updateTimeSub.compareTo("00:00:00") >= 0 && updateTimeSub.compareTo("03:59:59") <= 0) {
+        _0_section ++;
+      }
+      if (updateTimeSub.compareTo("04:00:00") >= 0 && updateTimeSub.compareTo("07:59:59") <= 0) {
+        _1_section ++;
+      }
+      if (updateTimeSub.compareTo("08:00:00") >= 0 && updateTimeSub.compareTo("11:59:59") <= 0) {
+        _2_section ++;
+      }
+      if (updateTimeSub.compareTo("12:00:00") >= 0 && updateTimeSub.compareTo("15:59:59") <= 0) {
+        _3_section ++;
+      }
+      if (updateTimeSub.compareTo("16:00:00") >= 0 && updateTimeSub.compareTo("19:59:59") <= 0) {
+        _4_section ++;
+      }
+      if (updateTimeSub.compareTo("20:00:00") >= 0 && updateTimeSub.compareTo("23:59:59") <= 0) {
+        _5_section ++;
+      }
+    }
+
+    dataValue.add(_0_section);
+    dataValue.add(_1_section);
+    dataValue.add(_2_section);
+    dataValue.add(_3_section);
+    dataValue.add(_4_section);
+    dataValue.add(_5_section);
+
+    ServiceResultDto serviceResultDto = ServiceResultDto.success();
+    serviceResultDto.set("dataTitle", dataTitle);
+    serviceResultDto.set("dataValue", dataValue);
     return serviceResultDto;
   }
 }

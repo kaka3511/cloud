@@ -40,4 +40,11 @@ public interface NewsApi {
    */
   ServiceResultDto modifyNews(ServiceRequestDto reqDto);
 
+  /**
+   * 查出24小时内6个区间段内各自的新增新闻量
+   * @param reqDto
+   * @return
+   */
+  ServiceResultDto get4EchartNews(ServiceRequestDto reqDto);
+
 }

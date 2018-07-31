@@ -74,4 +74,11 @@ public class NewsController {
     serviceRequestDto.put(map);
     return newsApi.modifyNews(serviceRequestDto);
   }
+
+  @RequestMapping(value = "/get4EchartNews", method = RequestMethod.GET)
+  @ResponseBody
+  public ServiceResultDto get4EchartNews() {
+    ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
+    return newsApi.get4EchartNews(serviceRequestDto);
+  }
 }
