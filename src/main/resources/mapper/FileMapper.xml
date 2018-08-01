@@ -12,11 +12,19 @@
     id, fileName, fileType, url, updateTime
   </sql>
 
+  <sql id="search_file_list_fragment">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="fileType != null and fileType != ''">
+        and fileType like '${fileType}%'
+      </if>
+    </trim>
+  </sql>
 
   <select id="queryFile" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from file
+    <include refid="search_file_list_fragment"></include>
     order by updateTime DESC, id DESC
   </select>
 

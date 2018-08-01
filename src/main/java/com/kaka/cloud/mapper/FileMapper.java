@@ -2,6 +2,7 @@ package com.kaka.cloud.mapper;
 
 import com.kaka.cloud.entity.FileInfo;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author fuwei
@@ -13,5 +14,5 @@ public interface FileMapper {
 
   void uploadFile(FileInfo fileInfo);
 
-  List<FileInfo> queryFile();
+  List<FileInfo> queryFile(@Param(value="fileType") String fileType);
 }

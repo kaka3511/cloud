@@ -49,10 +49,12 @@ public class FileController {
   @RequestMapping(value = "/queryFile", method = RequestMethod.GET)
   @ResponseBody
   public KakaResultDto queryFile(@RequestParam(value = "page", required = false) Integer page,
-                                 @RequestParam(value = "limit", required = false) Integer limit) {
+                                 @RequestParam(value = "limit", required = false) Integer limit,
+                                 @RequestParam(value = "fileType", required = false) String fileType) {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
     serviceRequestDto.set("page", page);
     serviceRequestDto.set("size", limit);
+    serviceRequestDto.set("fileType", fileType);
     ServiceResultDto serviceResultDto =  fileApi.queryFile(serviceRequestDto);
 
     KakaResultDto kakaResultDto = KakaResultDto.success();

@@ -32,6 +32,7 @@ public class FileApiImpl implements FileApi{
     MultipartFile file = (MultipartFile)requestDto.get("file");
     String baseUrl = System.getProperty("catalina.home");
     String fileType = file.getContentType();
+    String originFileName = file.getOriginalFilename();
     String fileName = file.getOriginalFilename().replace(".", UUID.randomUUID().toString() + ".");
     String realUrl = baseUrl + "/webapps/file/" + fileName;
     File filePath = new File(realUrl);
@@ -42,7 +43,7 @@ public class FileApiImpl implements FileApi{
     }
 
     String urlPath = "http://139.199.59.97:8081" + "/file/" + fileName;
-    FileInfo fileInfo = new FileInfo(fileType, fileName, urlPath);
+    FileInfo fileInfo = new FileInfo(fileType, originFileName, urlPath);
     fileMapper.uploadFile(fileInfo);
     ServiceResultDto resultDto = ServiceResultDto.success();
     return resultDto;
@@ -54,16 +55,20 @@ public class FileApiImpl implements FileApi{
     Map map = requestDto.getValues();
     Integer page = 1;
     Integer size = 10;
+    String fileType = "";
     if (null != map.get("page") && !"".equals(map.get("page").toString().trim())) {
       page = Integer.parseInt(map.get("page").toString().trim());
     }
     if (null != map.get("size") && !"".equals(map.get("size").toString().trim())) {
       size = Integer.parseInt(map.get("size").toString().trim());
     }
+    if (null != map.get("fileType") && !"".equals(map.get("fileType").toString().trim())) {
+      fileType = map.get("fileType").toString().trim();
+    }
 
-    List<FileInfo> countList = fileMapper.queryFile();
+    List<FileInfo> countList = fileMapper.queryFile(fileType);
     PageHelper.startPage(page, size);
-    List<FileInfo> dataList = fileMapper.queryFile();
+    List<FileInfo> dataList = fileMapper.queryFile(fileType);
 
     int totalNum = countList.size();
 
