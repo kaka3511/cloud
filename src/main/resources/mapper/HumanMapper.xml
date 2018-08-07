@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.cloud.mapper.HumanMapper">
+  <resultMap id="BaseResultMap" type="com.kaka.cloud.entity.Human">
+    <id column="id" property="id" jdbcType="TINYINT"/>
+    <result column="account" property="account" jdbcType="VARCHAR"/>
+    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+    <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,account,pwd,createTime
+  </sql>
+
+  <sql id="search_human_list_fragment">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="id != null and id != ''">
+        and id = #{id}
+      </if>
+      <if test="account != null and account != ''">
+        and account = #{account}
+      </if>
+      <if test="pwd != null and pwd != ''">
+        and pwd = #{pwd}
+      </if>
+    </trim>
+  </sql>
+
+  <select id="getHuman" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from human
+    <include refid="search_human_list_fragment"></include>
+  </select>
+
+  <insert id="addHuman">
+    INSERT INTO human(account,pwd,createTime)
+    VALUES(#{account},#{pwd},sysdate())
+  </insert>
+
+</mapper>

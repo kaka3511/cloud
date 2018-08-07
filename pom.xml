@@ -117,11 +117,18 @@
     </dependency>
 
 
+    <!--集成redis-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-redis</artifactId>
+      <version>1.4.1.RELEASE</version>
+    </dependency>
 
-
-
-
-
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <!--<dependency>-->

@@ -56,7 +56,11 @@ public class NewsController {
   @ResponseBody
   public KakaResultDto updateNews() {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
-    return newsApi.updateNews(serviceRequestDto);
+    ServiceResultDto serviceResultDto = newsApi.updateNews(serviceRequestDto);
+    KakaResultDto kakaResultDto = KakaResultDto.success();
+    kakaResultDto.setCode(0);
+    kakaResultDto.setMsg(serviceResultDto.get("msg", String.class));
+    return kakaResultDto;
   }
 
   @RequestMapping(value = "/delNews", method = RequestMethod.POST)

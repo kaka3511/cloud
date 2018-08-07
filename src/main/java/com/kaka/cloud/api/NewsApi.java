@@ -16,7 +16,7 @@ public interface NewsApi {
    * @param reqDto
    * @return
    */
-  KakaResultDto updateNews(ServiceRequestDto reqDto);
+  ServiceResultDto updateNews(ServiceRequestDto reqDto);
 
   /**
    * 获取已爬取新闻

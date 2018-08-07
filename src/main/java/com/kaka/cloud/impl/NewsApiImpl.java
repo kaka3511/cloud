@@ -37,16 +37,15 @@ public class NewsApiImpl implements NewsApi {
    * @return
    */
   @Override
-  public KakaResultDto updateNews(ServiceRequestDto reqDto) {
-    KakaResultDto kakaResultDto = KakaResultDto.success();
+  public ServiceResultDto updateNews(ServiceRequestDto reqDto) {
+    ServiceResultDto resultDto = ServiceResultDto.success();
     String baseUrl = "http://news.163.com/world/";
 
     Document doc= null;
     try {
       doc = Jsoup.connect(baseUrl).get();
     } catch (IOException e) {
-      kakaResultDto.setMsg("系统内部错误");
-      return kakaResultDto;
+      LogUtils.logOther("系统内部错误");
     }
 
     Elements elements = doc.select(".ns_area .today_news ul li a");
@@ -64,9 +63,9 @@ public class NewsApiImpl implements NewsApi {
       News insertObj = new News(title,url);
       newsMapper.insertNews(insertObj);
     }
-    kakaResultDto.setMsg("更新" + updateCount + "数据");
+    resultDto.set("msg", "更新" + updateCount + "数据");
     LogUtils.logOther("更新" + updateCount + "数据");
-    return kakaResultDto;
+    return resultDto;
   }
 
   @Override
