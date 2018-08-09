@@ -80,8 +80,10 @@ public class ServiceResultResovler {
     Object[] objects = pjp.getArgs();
     ServiceRequestDto requestDto = (ServiceRequestDto)objects[0];
 
-    LogUtils.logAccess(  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+
-            "【" + pjp.getTarget().getClass().getName() + ":"
-            + targetMethod.getName() + ":" + requestDto.getValues() + "】");
+    if (requestDto != null) {
+      LogUtils.logAccess(  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+
+              "【" + pjp.getTarget().getClass().getName() + ":"
+              + targetMethod.getName() + ":" + requestDto.getValues() + "】");
+    }
   }
 }

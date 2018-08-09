@@ -1,12 +1,14 @@
 package com.kaka.cloud.entity;
 
+import java.io.Serializable;
+
 /**
  * @author fuwei
  * @version V1.0
  * @Description: TODO(用一句话描述该文件做什么)
  * @date 2018/7/30 14:35
  */
-public class FileInfo {
+public class FileInfo implements Serializable {
 
   private int id;
   private String fileType;

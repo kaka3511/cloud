@@ -1,12 +1,14 @@
 package com.kaka.cloud.entity;
 
+import java.io.Serializable;
+
 /**
  * @author fuwei
  * @version V1.0
  * @Description: TODO(用一句话描述该文件做什么)
  * @date 2018/6/26 14:24
  */
-public class AppInfo {
+public class AppInfo implements Serializable {
   private Integer id;
   private String appName;
   private String appVersion;
