@@ -12,8 +12,7 @@ import org.springframework.context.annotation.ImportResource;
  * @date 2018/6/21 10:48
  */
 @SpringBootApplication
-@ImportResource(value = {"classpath:dubbo/applicationContext-dubbo-provider.xml"})
-//@MapperScan("com.kaka.cloud.mapper")
+@ImportResource(value = {"classpath:dubbo/applicationContext-dubbo-consumer.xml"})
 
 public class PlatformApplication extends SpringBootServletInitializer {
 

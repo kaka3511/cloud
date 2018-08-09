@@ -20,14 +20,10 @@ public class AppInfoApiImpl implements AppInfoApi {
   @Autowired
   private AppInfoMapper appInfoMapper;
 
-  @Autowired
-  private MqApi mqApi;
-
   @Override
   public ServiceResultDto getAppInfo(ServiceRequestDto reqDto) {
     ServiceResultDto resultDto = ServiceResultDto.success();
     resultDto.set("appInfo", appInfoMapper.getAppInfo(1));
-    mqApi.sendMessage(null);
     return resultDto;
   }
 }
