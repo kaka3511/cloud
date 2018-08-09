@@ -1,3 +1,9 @@
 .idea/
 target/
 src/main/main.iml
+cloud-common/cloud-common.iml
+cloud-api/cloud-api.iml
+cloud-dao/cloud-dao.iml
+cloud-web/cloud-web.iml
+cloud-server/cloud-server.iml
+cloud-config/cloud-config.iml
