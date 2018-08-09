@@ -5,17 +5,99 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.kaka</groupId>
-  <artifactId>cloud</artifactId>
+  <artifactId>cloud-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+
+  <name>cloud-parent</name>
+
+  <modules>
+    <module>cloud-api</module>
+    <module>cloud-config</module>
+    <module>cloud-dao</module>
+    <module>cloud-server</module>
+    <module>cloud-web</module>
+    <module>cloud-common</module>
+  </modules>
+
+  <packaging>pom</packaging>
 
   <properties>
+    <!-- Generic properties -->
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
+    <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+    <junit.version>4.12</junit.version>
 
+    <!-- Spring-Framework -->
+    <spring.version>4.2.6.RELEASE</spring.version>
+    <spring.data.redis>1.4.2.RELEASE</spring.data.redis>
+    <spring.boot.version>1.3.5.RELEASE</spring.boot.version>
+    <!-- AOP -->
+    <aspectj.version>1.8.6</aspectj.version>
+
+    <mybatis.version>3.3.1</mybatis.version>
+    <mybatis-spring-boot-starter.version>1.1.1</mybatis-spring-boot-starter.version>
+    <mybatis.spring.version>1.3.0</mybatis.spring.version>
+
+    <mysql.version>6.0.6</mysql.version>
+    <!-- jodis for redis -->
+    <!-- <jodis.version>0.1.2</jodis.version> -->
+    <jodis.version>0.4.0</jodis.version> <!--jodis升级客户端3.x -->
+
+    <!-- Logging & use org.slf4j.Logger -->
+    <slf4j.version>1.7.21</slf4j.version>
+    <logback.version>1.1.7</logback.version>
+
+    <!-- Java EE / Java SE dependencies -->
+    <servlet.version>3.1.0</servlet.version>
+
+    <!-- Database Connector / Connection Pool -->
+    <jdbc.driver.groupId>com.oracle</jdbc.driver.groupId>
+    <jdbc.driver.artifactId>ojdbc14</jdbc.driver.artifactId>
     <jdbc.driver.version>10.2.0.4.0</jdbc.driver.version>
     <druid.version>1.1.3</druid.version>
+
+    <!-- Apache Commons Tools -->
+    <commons-lang.version>2.6</commons-lang.version>
+    <commons-codec.version>1.8</commons-codec.version>
+    <commons-io.version>2.1</commons-io.version>
+    <commons-beanutils.version>1.8.3</commons-beanutils.version>
+    <commons-logging.version>1.1.1</commons-logging.version>
+    <commons-fileupload.version>1.2.2</commons-fileupload.version>
+    <commons.collections.version>3.2.1</commons.collections.version>
+    <commons.configuration.version>1.10</commons.configuration.version>
+    <dozer.version>5.4.0</dozer.version>
+    <freemarker.version>2.3.15</freemarker.version>
+
+    <!-- Other Tools -->
+    <httpclient.version>4.5.2</httpclient.version>
+    <okhttp.version>2.5.0</okhttp.version>
+    <fastjson.version>1.2.10</fastjson.version>
+    <kryo.version>2.24.0</kryo.version>
+    <curator.version>2.8.0</curator.version>
+    <common-collections4.version>4.0</common-collections4.version>
+    <guava.version>15.0</guava.version>
+
+    <!-- java mail -->
+    <javaxmail.version>1.4.7</javaxmail.version>
+
+    <!-- monitor -->
+    <bull.version>1.56.0</bull.version>
+
+    <!-- dubbo -->
+    <dubbo.version>2.8.4</dubbo.version>
+    <hessian.version>4.0.51</hessian.version>
+    <zkclient.version>0.1</zkclient.version>
+    <disconf.version>2.6.37</disconf.version>
+    <javamelody.version>1.47.0</javamelody.version>
+    <mbp.version>1.47.0</mbp.version>
+    <activemq.version>5.7.0</activemq.version>
+
+    <!-- tencent cloud -->
+    <qcloud-java-sdk.version>2.0.1</qcloud-java-sdk.version>
+    <cos_api.version>4.4</cos_api.version>
+
     <start-class>com.kaka.cloud.PlatformApplication</start-class>
   </properties>
 
@@ -25,37 +107,40 @@
     <version>1.3.5.RELEASE</version>
   </parent>
 
+  <dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <version>${spring.boot.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>1.2.47</version>
+      <version>${fastjson.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
+      <version>${commons-lang.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
+      <version>2.0.4.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.baidu.disconf/disconf-core -->
     <dependency>
       <groupId>com.baidu.disconf</groupId>
       <artifactId>disconf-client</artifactId>
-      <version>2.6.36</version>
+      <version>${disconf.version}</version>
     </dependency>
 
     <dependency>
@@ -75,14 +160,14 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.11</version>
+      <version>${mysql.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.5</version>
+      <version>${httpclient.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
@@ -128,72 +213,38 @@
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>2.9.6</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-    <!--<dependency>-->
-      <!--<groupId>mysql</groupId>-->
-      <!--<artifactId>mysql-connector-java</artifactId>-->
-      <!--<version>5.1.18</version>-->
-    <!--</dependency>-->
-    <!-- mybatis -->
-    <!--<dependency>-->
-      <!--<groupId>org.mybatis.spring.boot</groupId>-->
-      <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
-      <!--<version>1.1.1</version>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-      <!--<groupId>com.alibaba</groupId>-->
-      <!--<artifactId>druid</artifactId>-->
-      <!--<version>${druid.version}</version>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-      <!--<groupId>org.apache.poi</groupId>-->
-      <!--<artifactId>poi</artifactId>-->
-      <!--<version>3.8</version>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-      <!--<groupId>org.apache.poi</groupId>-->
-      <!--<artifactId>poi-ooxml</artifactId>-->
-      <!--<version>3.8</version>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-      <!--<groupId>org.apache.poi</groupId>-->
-      <!--<artifactId>poi-ooxml-schemas</artifactId>-->
-      <!--<version>3.8</version>-->
-    <!--</dependency>-->
-
   </dependencies>
+  </dependencyManagement>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <!-- 指明编译源代码时使用的字符编码， maven编译的时候默认使用的GBK编码， 通过encoding属性设置字符编码， 告诉maven这个项目使用UTF-8来编译 -->
+            <encoding>utf8</encoding>
+          </configuration>
+        </plugin>
 
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <!-- 指明编译源代码时使用的字符编码， maven编译的时候默认使用的GBK编码， 通过encoding属性设置字符编码， 告诉maven这个项目使用UTF-8来编译 -->
-          <encoding>utf8</encoding>
-        </configuration>
-      </plugin>
-    </plugins>
-    <finalName>cloud</finalName>
+      </plugins>
+    </pluginManagement>
   </build>
 
 
