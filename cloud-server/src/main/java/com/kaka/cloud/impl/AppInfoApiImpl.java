@@ -4,6 +4,7 @@ import com.kaka.cloud.api.AppInfoApi;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.mapper.AppInfoMapper;
+import com.kaka.mq.api.MqApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,14 @@ public class AppInfoApiImpl implements AppInfoApi {
   @Autowired
   private AppInfoMapper appInfoMapper;
 
+  @Autowired
+  private MqApi mqApi;
+
   @Override
   public ServiceResultDto getAppInfo(ServiceRequestDto reqDto) {
     ServiceResultDto resultDto = ServiceResultDto.success();
     resultDto.set("appInfo", appInfoMapper.getAppInfo(1));
+    mqApi.sendMessage(null);
     return resultDto;
   }
 }

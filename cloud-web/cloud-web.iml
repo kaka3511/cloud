@@ -32,6 +32,7 @@
     <orderEntry type="module" module-name="cloud-config" />
     <orderEntry type="module" module-name="cloud-common" />
     <orderEntry type="module" module-name="cloud-dao" />
+    <orderEntry type="library" name="Maven: com.kaka.mq:mq-api:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.10" level="project" />
     <orderEntry type="library" name="Maven: com.baidu.disconf:disconf-client:2.6.37" level="project" />
     <orderEntry type="library" name="Maven: com.baidu.disconf:disconf-core:2.6.37" level="project" />
