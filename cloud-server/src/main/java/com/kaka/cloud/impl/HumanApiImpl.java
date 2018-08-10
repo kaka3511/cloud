@@ -6,6 +6,7 @@ import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.Human;
 import com.kaka.cloud.mapper.HumanMapper;
+import com.kaka.mq.api.MqApi;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +27,9 @@ public class HumanApiImpl implements HumanApi {
 
   @Autowired
   private HumanMapper humanMapper;
+
+  @Autowired
+  private MqApi mqApi;
 
   @Override
   public ServiceResultDto signIn(ServiceRequestDto reqDto) {
@@ -53,6 +57,11 @@ public class HumanApiImpl implements HumanApi {
     requestDto.set("key", token);
     requestDto.set("obj", resList.get(0));
     redisApi.set(requestDto);
+
+    //登录提醒MQ
+    ServiceRequestDto mqRequestDto = new ServiceRequestDto();
+    mqRequestDto.set("msg", resList.get(0).getAccount() + " 上线了！");
+    mqApi.sendMessage(mqRequestDto);
 
     ServiceResultDto serviceResultDto = ServiceResultDto.success();
     serviceResultDto.set("token", token);
