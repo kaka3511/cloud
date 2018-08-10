@@ -1,6 +1,8 @@
 package com.kaka.cloud.config.db;
 
-import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author fuwei
@@ -8,11 +10,13 @@ import org.springframework.stereotype.Service;
  * @Description: TODO(用一句话描述该文件做什么)
  * @date 2018/5/4 10:16
  */
-@Service
+@Configuration
+@EnableAutoConfiguration
+@ConfigurationProperties(prefix = "db", locations = "classpath:db.properties")
 public class Db {
-  private String username = "localhost";
-  private String password = "Kaka3511!";
-  private String url = "jdbc:mysql://139.199.59.97:3306/cloud";
+  private String username;
+  private String password;
+  private String url;
 
   public String getUsername() {
     return username;
