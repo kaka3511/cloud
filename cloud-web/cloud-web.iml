@@ -27,6 +27,10 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-activemq:1.5.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.2.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.2.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-broker:5.7.0" level="project" />
     <orderEntry type="module" module-name="cloud-server" />
     <orderEntry type="module" module-name="cloud-api" />
     <orderEntry type="module" module-name="cloud-config" />

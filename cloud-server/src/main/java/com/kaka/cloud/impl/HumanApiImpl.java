@@ -59,9 +59,9 @@ public class HumanApiImpl implements HumanApi {
     redisApi.set(requestDto);
 
     //登录提醒MQ
-    ServiceRequestDto mqRequestDto = new ServiceRequestDto();
-    mqRequestDto.set("msg", resList.get(0).getAccount() + " 上线了！");
-    mqApi.sendMessage(mqRequestDto);
+//    ServiceRequestDto mqRequestDto = new ServiceRequestDto();
+//    mqRequestDto.set("msg", resList.get(0).getAccount() + " 上线了！");
+//    mqApi.sendMessage(mqRequestDto);
 
     ServiceResultDto serviceResultDto = ServiceResultDto.success();
     serviceResultDto.set("token", token);

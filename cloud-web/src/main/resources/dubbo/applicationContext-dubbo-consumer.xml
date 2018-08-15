@@ -11,5 +11,5 @@
     <dubbo:application  name="cloud-consumer" owner="cloud-consumer"/>
     <!-- 定义 zookeeper 注册中心地址及协议 -->
     <dubbo:registry protocol="zookeeper" address="139.199.59.97:2181" client="zkclient" />
-    <dubbo:reference id="mqApi" interface="com.kaka.mq.api.MqApi"/>
+    <dubbo:reference id="mqApi" interface="com.kaka.mq.api.MqApi" check="false"/>
 </beans>
