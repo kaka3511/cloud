@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsScheduler implements SchedulingConfigurer {
   //一分钟执行一次
-  private final static String CRON_DEFAULT = "0 0/1 * * * ?";
+  private final static String CRON_DEFAULT = "0 0/60 * * * ?";
 
   @Autowired
   private NewsApi newsApi;
