@@ -4,6 +4,11 @@ import com.kaka.cloud.api.NewsApi;
 import com.kaka.cloud.common.KakaResultDto;
 import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author fuwei
@@ -83,4 +91,38 @@ public class NewsController {
     ServiceRequestDto serviceRequestDto = new ServiceRequestDto();
     return newsApi.get4EchartNews(serviceRequestDto);
   }
+
+  @RequestMapping(value = "/exportNews", method = RequestMethod.GET)
+  @ResponseBody
+  public void exportNews(HttpServletResponse response) {
+    ServiceRequestDto reqDto = new ServiceRequestDto();
+    ServiceResultDto resultDto = newsApi.exportNews(reqDto);
+    Map<String, Object> map = (Map<String, Object>) resultDto.getResponseBody();
+    byte[] content = (byte[]) map.get("file_data");
+    String title = map.get("title") + "";
+
+    try {
+      InputStream is = new ByteArrayInputStream(content);
+      // 设置response参数，可以打开下载页面
+      response.reset();
+      response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+      response.setHeader("Content-Disposition", "attachment;filename=" + new String((title).getBytes("utf-8"), "iso-8859-1"));
+      response.setContentLength(content.length);
+      ServletOutputStream outputStream = response.getOutputStream();
+      BufferedInputStream bis = new BufferedInputStream(is);
+      BufferedOutputStream bos = new BufferedOutputStream(outputStream);
+      byte[] buff = new byte[8192];
+      int bytesRead;
+      while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+        bos.write(buff, 0, bytesRead);
+      }
+      bis.close();
+      bos.close();
+      outputStream.flush();
+      outputStream.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
 }

@@ -6,9 +6,14 @@ import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.News;
 import com.kaka.cloud.mapper.NewsMapper;
+import com.kaka.cloud.util.ExportExcel;
 import com.kaka.cloud.util.LogUtils;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.jsoup.Jsoup;
@@ -172,6 +177,36 @@ public class NewsApiImpl implements NewsApi {
     ServiceResultDto serviceResultDto = ServiceResultDto.success();
     serviceResultDto.set("dataTitle", dataTitle);
     serviceResultDto.set("dataValue", dataValue);
+    return serviceResultDto;
+  }
+
+  @Override
+  public ServiceResultDto exportNews(ServiceRequestDto reqDto) {
+    ServiceResultDto serviceResultDto = ServiceResultDto.success();
+    Map map = reqDto.getValues();
+    //获取DepotExportDto集合
+    List<News> dataList = newsMapper.queryNews(null, null);
+    if (dataList!=null) {
+      LogUtils.logOther("导出数据量:"+dataList.size());
+    } else {
+      LogUtils.logOther("没有查询到数据.");
+    }
+    //导出字节数组流
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    try {
+      ExportExcel.doExportExcel(dataList, News.class, os);
+    } catch (Exception e) {
+      ServiceResultDto.error("ERROR_DEPOT_EXPORT",e.getMessage());
+    }
+    String dateStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    String fileName = "新闻数据" + "-" + dateStr + ".xls";
+    serviceResultDto.put("title", fileName);
+    serviceResultDto.put("file_data", os.toByteArray());
+    try {
+      os.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     return serviceResultDto;
   }
 }

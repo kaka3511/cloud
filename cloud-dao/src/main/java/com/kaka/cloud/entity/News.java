@@ -1,5 +1,7 @@
 package com.kaka.cloud.entity;
 
+import com.kaka.cloud.annotation.ExcelField;
+
 import java.io.Serializable;
 
 /**
@@ -10,8 +12,11 @@ import java.io.Serializable;
  */
 public class News implements Serializable{
   private int id;
+  @ExcelField(name = "标题名称", maxLength = 40, required = true)
   private String title;
+  @ExcelField(name = "新闻链接", maxLength = 45, required = true)
   private String url;
+  @ExcelField(name = "爬取时间", maxLength = 10, required = true)
   private String updateTime;
 
   public News() {

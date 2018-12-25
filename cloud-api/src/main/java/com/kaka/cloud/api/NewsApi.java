@@ -46,4 +46,11 @@ public interface NewsApi {
    */
   ServiceResultDto get4EchartNews(ServiceRequestDto reqDto);
 
+
+  /**
+   * 导出excel信息
+   * @param reqDto
+   * @return
+   */
+  ServiceResultDto exportNews(ServiceRequestDto reqDto);
 }
