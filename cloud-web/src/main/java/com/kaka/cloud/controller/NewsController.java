@@ -11,6 +11,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+
+import com.kaka.cloud.entity.News;
+import com.kaka.cloud.util.ImportExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -123,6 +127,26 @@ public class NewsController {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  @RequestMapping(value = "/uploadNews", method = RequestMethod.POST)
+  @ResponseBody
+  public ServiceResultDto uploadNews(@RequestParam("file") MultipartFile file) {
+    ServiceRequestDto reqDto = new ServiceRequestDto();
+    if (file.isEmpty()) {
+      return ServiceResultDto.error("5001", "文件不存在！");
+    }
+    int size = (int) file.getSize();
+    if (size > 1024 * 1024 * 10) {
+      return ServiceResultDto.error("5002", "文件过大！");
+    }
+    try {
+      byte[] bytes = file.getBytes();
+      reqDto.all().put("data", bytes);
+    } catch (Exception e) {
+      return ServiceResultDto.error("5003", e.getMessage());
+    }
+    return newsApi.uploadNews(reqDto);
   }
 
 }

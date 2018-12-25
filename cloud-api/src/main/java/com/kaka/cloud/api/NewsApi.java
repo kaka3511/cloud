@@ -53,4 +53,11 @@ public interface NewsApi {
    * @return
    */
   ServiceResultDto exportNews(ServiceRequestDto reqDto);
+
+  /**
+   * 上传excel信息
+   * @param reqDto
+   * @return
+   */
+  ServiceResultDto uploadNews(ServiceRequestDto reqDto);
 }

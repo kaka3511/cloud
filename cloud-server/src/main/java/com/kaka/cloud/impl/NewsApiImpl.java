@@ -7,21 +7,24 @@ import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.News;
 import com.kaka.cloud.mapper.NewsMapper;
 import com.kaka.cloud.util.ExportExcel;
+import com.kaka.cloud.util.ImportExcel;
 import com.kaka.cloud.util.LogUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author fuwei
@@ -209,4 +212,24 @@ public class NewsApiImpl implements NewsApi {
     }
     return serviceResultDto;
   }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public ServiceResultDto uploadNews(ServiceRequestDto reqDto) {
+    try {
+      byte[] data = (byte[]) reqDto.get("data");
+      InputStream in = new ByteArrayInputStream(data);
+      List<News> newsList = (List<News>) ImportExcel.importExcelForIo(in, 2, 0, News.class);
+      if (newsList != null && newsList.size() > 0) {
+        newsList.forEach(x ->{
+          newsMapper.insertNews(x);
+        });
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ServiceResultDto.error("5003", e.getMessage());
+    }
+    return ServiceResultDto.success();
+  }
+
 }
