@@ -6,7 +6,7 @@ import com.kaka.cloud.common.ServiceRequestDto;
 import com.kaka.cloud.common.ServiceResultDto;
 import com.kaka.cloud.entity.Human;
 import com.kaka.cloud.mapper.HumanMapper;
-import com.kaka.mq.api.MqApi;
+//import com.kaka.mq.api.MqApi;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,8 +28,8 @@ public class HumanApiImpl implements HumanApi {
   @Autowired
   private HumanMapper humanMapper;
 
-  @Autowired
-  private MqApi mqApi;
+//  @Autowired
+//  private MqApi mqApi;
 
   @Override
   public ServiceResultDto signIn(ServiceRequestDto reqDto) {
